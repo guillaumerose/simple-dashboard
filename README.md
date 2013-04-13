@@ -9,6 +9,6 @@ All data are consumed by a web page refreshing frequently thoses data.
 You‘ll need to create a config.json file (see config.dist.json), then launch it so :
 
 ```bash
-    node launcher.js
+node launcher.js
 ```
 
