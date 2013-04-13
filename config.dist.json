@@ -9,6 +9,9 @@
         "search": "mappy",
         "account_name": "mappy"
     },
+    "facebook": {
+        "page_id": "142313619164269"
+    },
     "indoor": {
         "host": "",
         "urls": {

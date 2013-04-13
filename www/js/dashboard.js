@@ -49,6 +49,24 @@
         };
     })();
 
+    var Facebook = (function() {
+        var facebookCompiled = _.template($('#facebook-fans').html());
+
+        var displayFansCount = function(result) {
+            var output = facebookCompiled({fan_count: formatNumber(result.fan_count)});
+            $('.facebook.fans').html(output);
+        };
+
+        return {
+            'show': function() {
+                $.getJSON('/api/facebook/fans')
+                .done(displayFansCount)
+                .fail(function() {
+                    displayFansCount({ fan_count: 80838}); // Fake
+                });
+            }
+        };
+    })();
 
     var CollecteIndoor = (function() {
         var map = new Mappy.api.map.Map({ container:'#indoorMap' });
@@ -145,11 +163,13 @@
     AudienceInfo.show();
     PoisInfo.show();
     Twitter.show();
+    Facebook.show();
     CollecteIndoor.show();
     CollecteOutdoor.show();
     setInterval(AudienceInfo.show, 10 * 1000); // Refresh every 10 sec
     setInterval(PoisInfo.show, 30 * 1000); // Refresh every 30 sec
     setInterval(Twitter.show, 60 * 1000); // Refresh each minute
+    setInterval(Facebook.show, 60 * 1000); // Refresh each minute
     setInterval(CollecteIndoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(CollecteOutdoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(RSS.refresh, 60 * 60 * 1000); // Refresh hourly

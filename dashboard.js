@@ -8,6 +8,7 @@ exports.launch = function(config) {
 
     var twitterMappyInfo = '';
     var twitterLastTweets = '';
+    var facebookInfo = '';
     var indoorToday = '';
     var indoorAll = '';
     var audienceWeb = '';
@@ -64,6 +65,11 @@ exports.launch = function(config) {
         setTimeout(refreshTwittersInfo, 60 * 1000);
     };
 
+    var refreshFacebookInfo = function() {
+        fetchHttp(https, 443, 'graph.facebook.com', '/fql?q=SELECT%20fan_count,%20page_url%20FROM%20page%20WHERE%20page_id='+config.facebook.page_id, function(json) { facebookInfo = json;});
+        setTimeout(refreshFacebookInfo, 60 * 1000);
+    };
+
     var refreshAudienceInfo = function() {
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.web), function(json) { audienceWeb = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.android), function(json) { audienceAndroid = json; }, config.xiti.login, config.xiti.password);
@@ -75,6 +81,7 @@ exports.launch = function(config) {
     fetchIndoorInfo();
     refreshAudienceInfo();
     refreshTwittersInfo();
+    refreshFacebookInfo();
 
     var app = express();
     app.configure(function() {
@@ -91,6 +98,11 @@ exports.launch = function(config) {
     app.get('/api/twitter/lastTweets', function(req, res) {
         console.log('Serving /api/twitter/lastTweets');
         res.send(twitterLastTweets);
+    });
+    app.get('/api/facebook/fans', function(req, res) {
+        console.log('Serving /api/facebook/fans');
+        var parsed = JSON.parse(facebookInfo);
+        res.send(JSON.stringify(parsed.data[0]));
     });
     app.get('/api/indoor/paris/today', function(req, res) {
         console.log('Serving /api/indoor/paris/today');
