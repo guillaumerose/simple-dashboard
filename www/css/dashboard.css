@@ -1,0 +1,77 @@
+body {
+    margin: 80px 0 1em 1em;
+    background: url('../img/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+i { color: blue; }
+h2 { margin: 0; color: #333; font-size: 24px;}
+h3 { margin: 0; color: #444; font-size: 20px; }
+#title {
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+.container {
+    width: 1240px;
+}
+.small { width: 482px; }
+.large { width: 698px; }
+.widget {
+    background-color: rgba(255, 255, 255, 0.95);
+    padding: 10px;
+    margin-bottom: 14px;
+}
+.widget small {
+    font-size: 20px;
+}
+
+#social .twitter.followers {
+    background: url(../img/twitter.png) no-repeat 0 0;
+    margin-top: 16px;
+    padding: 10px 0 0 65px;
+    color: #1EB6E9;
+    font-size: 30px;
+    min-height: 50px;
+}
+#social .facebook.fans {
+    background: url(../img/facebook_like.png) no-repeat 0 0;
+    padding: 16px 0 0 65px;
+    color: #00346B;
+    font-size: 30px;
+    min-height: 50px;
+}
+#social .span3 { width: 240px; }
+#social .span5 { width: 360px;}
+#social .twitter.tweets { font-size: 14px;}
+.widget .twitter.tweets small { font-size: 10px;}
+#social .twitter.tweets .tweet img { margin-right: 4px; float: left;}
+
+#data .pois .count {
+    background: url(../img/poi.png) no-repeat 0 0;
+    padding: 18px 0 0 120px;
+    color: #333;
+    font-size: 30px;
+    min-height: 60px;
+}
+
+#audience .audience .web {
+    background: url(../img/web.png) no-repeat 0 0;
+    padding: 18px 0 0 100px;
+    font-size: 30px;
+    min-height: 60px;
+}
+
+#audience .audience .mobile {
+    background: url(../img/mobile.png) no-repeat 15px 0;
+    padding: 18px 0 0 100px;
+    font-size: 30px;
+    min-height: 60px;
+}
+#audience .audience .web small { margin-left: 28px; }
+#audience .audience .mobile small { margin-left: 18px; }
+
+#collecte .map { width: 460px; height: 460px; }
+
+#feed .newsfeed {
+    width: 100%;
+}

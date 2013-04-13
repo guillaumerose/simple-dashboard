@@ -1,0 +1,31 @@
+{
+    "mongo": {
+        "host": "",
+        "port": "27017",
+        "db": "",
+        "collection": ""
+    },
+    "twitter": {
+        "search": "mappy",
+        "account_name": "mappy"
+    },
+    "indoor": {
+        "host": "",
+        "urls": {
+            "today": "",
+            "all": ""
+        },
+        "login":  "",
+        "password": ""
+    },
+    "xiti": {
+        "host": "apirest.atinternet-solutions.com",
+        "urls": {
+            "web": "",
+            "android": "",
+            "ios": ""
+        },
+        "login":  "",
+        "password": ""
+    }
+}

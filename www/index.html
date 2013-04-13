@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Mappy's dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+        <link href="css/dashboard.css" rel="stylesheet" media="screen">
+    </head>
+    <body>
+        <img id="title" src="img/title.png" />
+        <div class="container">
+
+            <div class="span8 large">
+
+                <section id="audience" class="widget">
+                    <h2>Audience journalière</h2>
+                    <div class="row">
+                        <div class="audience span3">
+                            <p class="web"></p>
+                            <p class="mobile"></p>
+                            <script type="text/template" id="audience-count">
+                                <%= count %> <small>visites</small>
+                            </script>
+
+                        </div>
+                        <div class="span5">
+                            <img src="img/audience-web.png">
+                        </div>
+                </section>
+
+
+                <section id="social" class="widget">
+                    <div class="row">
+                        <div class="span3">
+                            <h2>Médias sociaux</h2>
+                            <p class="twitter followers"></p>
+                            <script type="text/template" id="twitter-followers">
+                                <%= followers %> <small>followers</small>
+                            </script>
+
+                            <p class="facebook fans">
+                                80,798 <small>fans</small>
+                            </p>
+                        </div>
+                        <div class="span5">
+                            <div class="twitter tweets"></div>
+                            <script type="text/template" id="twitter-tweet">
+                                <p class="tweet">
+                                    <img src="<%= profile_image_url %>"/><%= cleanText %> par <i>@<%= from_user %></i> <small>le <%= date %></small>
+                                </p>
+                            </script>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="feed" class="widget">
+                    <h2>Blogosphère</h2>
+                    <iframe class="newsfeed" src="http://www.poweringnews.com/newsframe.aspx?feedurl=https%3A//www.facebook.com/feeds/page.php%3Fformat%3Datom10%26id%3D142313619164269&maxitems=3&showfeedtitle=0&showtitle=1&showdate=0&showsummary=0&showauthor=0&showactionsbox=0&showrsslink=0&showcopyright=0&opennewwindow=0&inheritstyles=0&bgcolor=%23FFFFFF&titlefontsize=10&summaryfontsize=10&fontfamily=Arial%2CHelvetica&titlecolor=%230000CC&summarycolor=%23000000&sepstyle=none&sepcolor=%23A0A0A0&objectid=newsblock71445404" frameborder="0"></iframe>
+                </section>
+            </div>
+
+            <div class="span4 small">
+                <section id="data" class="widget">
+                    <article class="pois">
+                        <h2>POIs</h2>
+                        <p class="count"></p>
+                        <script type="text/template" id="pois-count">
+                            <%= count %> <small>POIs</small>
+                        </script>
+                    </article>
+                </section>
+
+                <section id="collecte" class="widget">
+                    <h2>Collecte</h2>
+                    <div class="sliding">
+                        <article class="outdoor">
+                            <h3>Outdoor</h3>
+                            <div id="outdoorMap" class="map"></div>
+                        </article>
+                        <article class="indoor">
+                            <h3>Indoor</h3>
+                            <div id="indoorMap" class="map"></div>
+                        </article>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <script src="js/lib/jquery-1.9.1.min.js"></script>
+        <script src="js/lib/underscore-min.js"></script>
+        <script src="js/lib/bootstrap.min.js"></script>
+        <script src="http://axe.mappy.com/1v1/init/get.aspx?auth=aRjYy8tqadXwjHKFbW1AcCOz0CR47+b/ONJsHAR/E2QvvjQ7hpBkKByg+zw2FXzxG0a3UOdWYqtswMqSqe0Biw==&version=2.01&solution=ajax"></script>
+        <script src="js/dashboard.js"></script>
+    </body>
+</html>
