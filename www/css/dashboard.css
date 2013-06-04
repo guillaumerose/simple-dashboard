@@ -58,21 +58,21 @@ h3 { margin: 0; color: #444; font-size: 20px; }
     min-height: 60px;
 }
 
-#audience .audience .web {
-    background: url(../img/web.png) no-repeat 0 0;
-    padding: 18px 0 0 100px;
+#audience .audience .web,
+#audience .audience .mobile {
     font-size: 30px;
     min-height: 60px;
+    margin-bottom: 0;
+}
+#audience .audience .web {
+    background: url(../img/web.png) no-repeat 2px 8px;
+    padding: 30px 0 0 80px;
 }
 
 #audience .audience .mobile {
-    background: url(../img/mobile.png) no-repeat 15px 0;
-    padding: 18px 0 0 100px;
-    font-size: 30px;
-    min-height: 60px;
+    background: url(../img/mobile.png) no-repeat 15px 8px;
+    padding: 30px 0 0 70px;
 }
-#audience .audience .web small { margin-left: 28px; }
-#audience .audience .mobile small { margin-left: 18px; }
 
 #collecte .map { width: 460px; height: 460px; }
 

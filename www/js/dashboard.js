@@ -160,12 +160,12 @@
 
         var displayWebAudience = function(jsonResponse) {
             var output = compiled({ count: formatNumber(jsonResponse.count)});
-            $('#audience .audience .web').html(output);
+            $('#audience .web').html(output);
         };
         var displayMobileAudience = function(jsonResponse) {
             var total = parseInt(jsonResponse.androidCount, 10) + parseInt(jsonResponse.iphoneCount, 10);
             var output = compiled({ count: formatNumber(total)});
-            $('#audience .audience .mobile').html(output);
+            $('#audience .mobile').html(output);
         };
 
         return {
