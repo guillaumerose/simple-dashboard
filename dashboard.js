@@ -3,7 +3,8 @@ exports.launch = function(config) {
     var http = require("http"),
         https = require("https"),
         express = require('express'),
-        format =  require('util').format;
+        format =  require('util').format,
+        fs = require('fs');
         MongoClient = require('mongodb').MongoClient;
 
     var twitterMappyInfo = '';
@@ -15,6 +16,7 @@ exports.launch = function(config) {
     var audienceAndroid = '';
     var audienceiPhone = '';
     var poisCount = 0;
+    var edito = '';
 
     var insertDateInUrl = function(url) {
         var date = new Date();
@@ -36,6 +38,15 @@ exports.launch = function(config) {
                 callback(json);
             });
         }).end();
+    };
+
+    var fetchFileContent = function(path, callback) {
+        fs.readFile(path, 'utf8', function(err, data) {
+            if (err) {
+                return console.log(err);
+            }
+            callback(data);
+        });
     };
 
     var fetchPoisNumber = function() {
@@ -77,11 +88,17 @@ exports.launch = function(config) {
         setTimeout(refreshAudienceInfo, 30 * 1000);
     };
 
+    var fetchEdito = function() {
+        fetchFileContent('./www/resources/edito.txt', function (data) { edito = data; });
+        setTimeout(fetchEdito, 30 * 1000);
+    };
+
     fetchPoisNumber();
     fetchIndoorInfo();
     refreshAudienceInfo();
     refreshTwittersInfo();
     refreshFacebookInfo();
+    fetchEdito();
 
     var app = express();
     app.configure(function() {
@@ -129,6 +146,11 @@ exports.launch = function(config) {
     app.get('/api/pois/count', function(req, res) {
         console.log('Serving /api/pois/count');
         var objResponse = {'count':poisCount};
+        res.send(JSON.stringify(objResponse));
+    });
+    app.get('/api/edito/infos', function(req, res) {
+        console.log('Serving /api/edito/infos');
+        var objResponse = {'edito':edito};
         res.send(JSON.stringify(objResponse));
     });
     app.listen(8888);

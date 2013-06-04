@@ -46,6 +46,10 @@ h3 { margin: 0; color: #444; font-size: 20px; }
 .widget .twitter.tweets small { font-size: 10px;}
 #social .twitter.tweets .tweet img { margin-right: 4px; float: left;}
 
+#data {
+    height: 150px;
+}
+
 #data .pois .count {
     background: url(../img/poi.png) no-repeat 0 0;
     padding: 18px 0 0 120px;

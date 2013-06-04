@@ -1,5 +1,15 @@
 (function() {
 
+    // Edito toggler configuration
+    var editoConfig = [{
+        element: $('#data .edito'),
+        duration: 10 * 1000
+    }, {
+        element: $('#data .pois'),
+        duration: 5 * 1000
+    }];
+
+
     var formatNumber = function(x) {
         var parts = x.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -45,6 +55,18 @@
                 });
 
                 $.getJSON('/api/twitter/lastTweets').done(displayLastTweets);
+            }
+        };
+    })();
+
+    var Edito = (function() {
+        var displayEdito = function(result) {
+            $('.edito div').html(result.edito);
+        };
+
+        return {
+            'show': function() {
+                $.getJSON('/api/edito/infos').done(displayEdito);
             }
         };
     })();
@@ -111,7 +133,7 @@
 
         return {
             'show': function() {
-                $.getJSON('/fake/outdoor.json').done(showOutdoor);
+                $.getJSON('/resources/outdoor.json').done(showOutdoor);
             }
         };
     })();
@@ -120,8 +142,10 @@
         var compiled = _.template($('#pois-count').html());
 
         var displayPois = function(jsonResponse) {
-            var output = compiled({ count: formatNumber(jsonResponse.count)});
-            $('.pois .count').html(output);
+            if (jsonResponse.count !== null) {
+                var output = compiled({ count: formatNumber(jsonResponse.count)});
+                $('.pois .count').html(output);
+            }
         };
 
         return {
@@ -166,6 +190,7 @@
     Facebook.show();
     CollecteIndoor.show();
     CollecteOutdoor.show();
+    Edito.show();
     setInterval(AudienceInfo.show, 10 * 1000); // Refresh every 10 sec
     setInterval(PoisInfo.show, 30 * 1000); // Refresh every 30 sec
     setInterval(Twitter.show, 60 * 1000); // Refresh each minute
@@ -173,11 +198,12 @@
     setInterval(CollecteIndoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(CollecteOutdoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(RSS.refresh, 60 * 60 * 1000); // Refresh hourly
+    setInterval(Edito.show, 60 * 1000); // Refresh each minute
 
     $('#collecte .indoor').hide();
-    var iAlternate = 0;
+    var iMapAlternate = 0;
     setInterval(function alternateMaps() {
-        if (iAlternate % 2 === 0) {
+        if (iMapAlternate % 2 === 0) {
             $('#collecte .outdoor').fadeToggle(function() {
                 $('#collecte .indoor').fadeToggle();
             });
@@ -186,7 +212,22 @@
                 $('#collecte .outdoor').fadeToggle();
             });
         }
-        iAlternate++;
+        iMapAlternate++;
     }, 30 * 1000);
+
+
+    // Edito toggler initialisation
+    editoConfig[0].element.hide();
+    var iEditoAlternate = 0;
+
+    var alternateEdito = function () {
+        var idx = iEditoAlternate % 2;
+        editoConfig[1-idx].element.fadeToggle(function() {
+            editoConfig[idx].element.fadeToggle();
+        });
+        iEditoAlternate++;
+        setTimeout(alternateEdito, editoConfig[idx].duration);
+    };
+    setTimeout(alternateEdito, 5 * 1000);
 
 })();
