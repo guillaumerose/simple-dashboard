@@ -230,4 +230,6 @@
     };
     setTimeout(alternateEdito, 5 * 1000);
 
+    // Use new logo on maps
+    $('.map .default-logo').attr('src','img/map-logo.png');
 })();
