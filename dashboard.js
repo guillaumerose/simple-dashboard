@@ -49,7 +49,7 @@ exports.launch = function(config) {
         });
     };
 
-    var fetchPoisNumber = function() {
+    var refreshPoisNumber = function() {
         var url = format("mongodb://%s:%s/%s", config.mongo.host, config.mongo.port, config.mongo.db);
         MongoClient.connect(url, function(err, db) {
             if (err) {
@@ -61,13 +61,13 @@ exports.launch = function(config) {
                 });
             }
         });
-        setTimeout(fetchPoisNumber, 30 * 1000);
+        setTimeout(refreshPoisNumber, 30 * 1000);
     };
 
-    var fetchIndoorInfo = function() {
+    var refreshIndoorInfo = function() {
         fetchHttp(http, 80, config.indoor.host, insertDateInUrl(config.indoor.urls.today), function(result) { indoorToday = result; }, config.indoor.login, config.indoor.password);
         fetchHttp(http, 80, config.indoor.host, config.indoor.urls.all, function(result) { indoorAll = result; }, config.indoor.login, config.indoor.password);
-        setTimeout(fetchPoisNumber, 12 * 60 * 60 * 1000);
+        setTimeout(refreshIndoorInfo, 12 * 60 * 60 * 1000);
     };
 
     var refreshTwittersInfo = function() {
@@ -88,17 +88,17 @@ exports.launch = function(config) {
         setTimeout(refreshAudienceInfo, 30 * 1000);
     };
 
-    var fetchEdito = function() {
+    var refreshEdito = function() {
         fetchFileContent('./www/resources/edito.txt', function (data) { edito = data; });
-        setTimeout(fetchEdito, 30 * 1000);
+        setTimeout(refreshEdito, 30 * 1000);
     };
 
-    fetchPoisNumber();
-    fetchIndoorInfo();
+    refreshPoisNumber();
+    refreshIndoorInfo();
     refreshAudienceInfo();
     refreshTwittersInfo();
     refreshFacebookInfo();
-    fetchEdito();
+    refreshEdito();
 
     var app = express();
     app.configure(function() {
