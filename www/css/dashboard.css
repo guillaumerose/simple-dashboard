@@ -46,16 +46,32 @@ h3 { margin: 0; color: #444; font-size: 20px; }
 .widget .twitter.tweets small { font-size: 10px;}
 #social .twitter.tweets .tweet img { margin-right: 4px; float: left;}
 
-#data {
+#audience, #data {
     height: 130px;
+}
+
+#collecte {
+    height: 560px;
+}
+
+#social {
+    height: 236px;
+}
+
+#feed {
+    height: 290px;
+    overflow: hidden;
 }
 
 #data .pois .count {
     background: url(../img/poi.png) no-repeat 0 0;
+    width: 30%;
+    min-height: 60px;
+    margin-left: auto;
+    margin-right: auto;
     padding: 18px 0 0 120px;
     color: #333;
     font-size: 30px;
-    min-height: 60px;
 }
 
 #audience .audience .web,
@@ -66,7 +82,7 @@ h3 { margin: 0; color: #444; font-size: 20px; }
 }
 #audience .audience .web {
     background: url(../img/web.png) no-repeat 2px 8px;
-    padding: 30px 0 0 80px;
+    padding: 30px 0 0 90px;
 }
 
 #audience .audience .mobile {
