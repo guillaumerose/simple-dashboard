@@ -21,7 +21,7 @@ exports.launch = function(config) {
     var insertDateInUrl = function(url) {
         var date = new Date();
         var y = ''+date.getUTCFullYear();
-        var m = (date.getUTCMonth() < 10) ? '0'+date.getUTCMonth() : ''+date.getUTCMonth();
+        var m = (date.getUTCMonth() < 10) ? '0'+(date.getUTCMonth()+1) : ''+(date.getUTCMonth()+1);
         var d = (date.getUTCDate() < 10) ? '0'+date.getUTCDate() : ''+date.getUTCDate();
         return format(url, y, m, d, y, m, d);
     };
