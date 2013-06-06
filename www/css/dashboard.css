@@ -25,18 +25,19 @@ h3 { margin: 0; color: #444; font-size: 20px; }
     font-size: 20px;
 }
 
-#social .twitter.followers {
-    background: url(../img/twitter.png) no-repeat 0 0;
-    margin-top: 16px;
-    padding: 10px 0 0 65px;
-    color: #1EB6E9;
+#social .facebook.fans {
+    background: url(../img/facebook_like.png) no-repeat 0 0;
+    margin-top: 20px;
+    padding: 16px 0 0 65px;
+    color: #00346B;
     font-size: 30px;
     min-height: 50px;
 }
-#social .facebook.fans {
-    background: url(../img/facebook_like.png) no-repeat 0 0;
-    padding: 16px 0 0 65px;
-    color: #00346B;
+#social .twitter.followers {
+    background: url(../img/twitter.png) no-repeat 0 0;
+    margin-top: 20px;
+    padding: 10px 0 0 65px;
+    color: #1EB6E9;
     font-size: 30px;
     min-height: 50px;
 }
@@ -46,7 +47,7 @@ h3 { margin: 0; color: #444; font-size: 20px; }
 .widget .twitter.tweets small { font-size: 10px;}
 #social .twitter.tweets .tweet img { margin-right: 4px; float: left;}
 
-#audience, #data {
+#audience, #edito, #data {
     height: 130px;
 }
 
@@ -59,7 +60,7 @@ h3 { margin: 0; color: #444; font-size: 20px; }
 }
 
 #feed {
-    height: 290px;
+    height: 455px;
     overflow: hidden;
 }
 
@@ -91,7 +92,3 @@ h3 { margin: 0; color: #444; font-size: 20px; }
 }
 
 #collecte .map { width: 460px; height: 460px; }
-
-#feed .newsfeed {
-    width: 100%;
-}

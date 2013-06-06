@@ -32,15 +32,16 @@
                     <div class="row">
                         <div class="span3">
                             <h2>Médias sociaux</h2>
+                            <p class="facebook fans"></p>
+                            <script type="text/template" id="facebook-fans">
+                                <%= fan_count %> <small>fans</small>
+                            </script>
+
                             <p class="twitter followers"></p>
                             <script type="text/template" id="twitter-followers">
                                 <%= followers %> <small>followers</small>
                             </script>
 
-                            <p class="facebook fans"></p>
-                            <script type="text/template" id="facebook-fans">
-                                <%= fan_count %> <small>fans</small>
-                            </script>
                         </div>
                         <div class="span5">
                             <div class="twitter tweets"></div>
@@ -57,21 +58,14 @@
                     <h2>Derniers posts Facebook</h2>
                     <div class="row">
                         <div class="span8">
-                            <iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fmappyonline&amp;width=670&amp;height=250&amp;show_faces=false&amp;colorscheme=light&amp;stream=true&amp;show_border=false&amp;header=false&amp;appId=164566463720842" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:670px; height:250px;" allowTransparency="true"></iframe>
+                            <iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2Fmappyonline&amp;width=670&amp;height=410&amp;show_faces=false&amp;colorscheme=light&amp;stream=true&amp;show_border=false&amp;header=false&amp;appId=164566463720842" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:670px; height:410px;" allowTransparency="true"></iframe>
                         </div>
                     </div>
                 </section>
             </div>
 
             <div class="span4 small">
-                <section id="data" class="widget">
-                    <article class="pois">
-                        <h2>Le saviez-vous</h2>
-                        <p class="count"></p>
-                        <script type="text/template" id="pois-count">
-                            <%= count %> <p><small>Poi en base</small></p>
-                        </script>
-                    </article>
+                <section id="edito" class="widget">
                     <article class="edito">
                         <h2>On en parle</h2>
                         <div></div>
@@ -91,6 +85,17 @@
                         </article>
                     </div>
                 </section>
+
+                <section id="data" class="widget">
+                    <article class="pois">
+                        <h2>Le saviez-vous</h2>
+                        <p class="count"></p>
+                        <script type="text/template" id="pois-count">
+                            <%= count %> <p><small>Poi en base</small></p>
+                        </script>
+                    </article>
+                </section>
+
             </div>
         </div>
         <script src="js/lib/jquery-1.9.1.min.js"></script>

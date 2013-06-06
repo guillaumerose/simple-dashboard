@@ -1,15 +1,5 @@
 (function() {
 
-    // Edito toggler configuration
-    var editoConfig = [{
-        element: $('#data .edito'),
-        duration: 10 * 1000
-    }, {
-        element: $('#data .pois'),
-        duration: 5 * 1000
-    }];
-
-
     var formatNumber = function(x) {
         var parts = x.toString().split(".");
         parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -176,10 +166,10 @@
         };
     })();
 
-    var RSS = (function() {
+    var facebookPost = (function() {
         return {
             'refresh': function() {
-                $('#feed .newsfeed').get(0).contentWindow.location.reload(true);
+                $('#feed iframe').get(0).contentWindow.location.reload(true);
             }
         };
     })();
@@ -197,7 +187,7 @@
     setInterval(Facebook.show, 60 * 1000); // Refresh each minute
     setInterval(CollecteIndoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(CollecteOutdoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
-    setInterval(RSS.refresh, 60 * 60 * 1000); // Refresh hourly
+    setInterval(facebookPost.refresh, 60 * 60 * 1000); // Refresh hourly
     setInterval(Edito.show, 60 * 1000); // Refresh each minute
 
     $('#collecte .indoor').hide();
@@ -214,21 +204,6 @@
         }
         iMapAlternate++;
     }, 30 * 1000);
-
-
-    // Edito toggler initialisation
-    editoConfig[0].element.hide();
-    var iEditoAlternate = 0;
-
-    var alternateEdito = function () {
-        var idx = iEditoAlternate % 2;
-        editoConfig[1-idx].element.fadeToggle(function() {
-            editoConfig[idx].element.fadeToggle();
-        });
-        iEditoAlternate++;
-        setTimeout(alternateEdito, editoConfig[idx].duration);
-    };
-    setTimeout(alternateEdito, 5 * 1000);
 
     // Use new logo on maps
     $('.map .default-logo').attr('src','img/map-logo.png');
