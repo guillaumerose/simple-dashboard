@@ -61,36 +61,36 @@ exports.launch = function(config) {
                 });
             }
         });
-        setTimeout(refreshPoisNumber, 30 * 1000);
+        setTimeout(refreshPoisNumber, config.mongo.refresh);
     };
 
     var refreshIndoorInfo = function() {
         fetchHttp(http, 80, config.indoor.host, insertDateInUrl(config.indoor.urls.today), function(result) { indoorToday = result; }, config.indoor.login, config.indoor.password);
         fetchHttp(http, 80, config.indoor.host, config.indoor.urls.all, function(result) { indoorAll = result; }, config.indoor.login, config.indoor.password);
-        setTimeout(refreshIndoorInfo, 12 * 60 * 60 * 1000);
+        setTimeout(refreshIndoorInfo, config.indoor.refresh);
     };
 
     var refreshTwittersInfo = function() {
         fetchHttp(https, 443, 'api.twitter.com', '/1/users/show.json?screen_name='+config.twitter.search, function(json) { twitterMappyInfo = json;});
         fetchHttp(https, 443, 'search.twitter.com', '/search.json?lang=fr&q='+config.twitter.account_name, function(json) { twitterLastTweets = json; });
-        setTimeout(refreshTwittersInfo, 60 * 1000);
+        setTimeout(refreshTwittersInfo, config.twitter.refresh);
     };
 
     var refreshFacebookInfo = function() {
         fetchHttp(https, 443, 'graph.facebook.com', '/fql?q=SELECT%20fan_count,%20page_url%20FROM%20page%20WHERE%20page_id='+config.facebook.page_id, function(json) { facebookInfo = json;});
-        setTimeout(refreshFacebookInfo, 60 * 1000);
+        setTimeout(refreshFacebookInfo, config.facebook.refresh);
     };
 
     var refreshAudienceInfo = function() {
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.web), function(json) { audienceWeb = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.android), function(json) { audienceAndroid = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.ios), function(json) { audienceiPhone = json; }, config.xiti.login, config.xiti.password);
-        setTimeout(refreshAudienceInfo, 30 * 1000);
+        setTimeout(refreshAudienceInfo, config.xiti.refresh);
     };
 
     var refreshEdito = function() {
         fetchFileContent('./www/resources/edito.txt', function (data) { edito = data; });
-        setTimeout(refreshEdito, 30 * 1000);
+        setTimeout(refreshEdito, config.edito.refresh);
     };
 
     refreshPoisNumber();

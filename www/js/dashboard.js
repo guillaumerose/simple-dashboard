@@ -181,10 +181,10 @@
     CollecteIndoor.show();
     CollecteOutdoor.show();
     Edito.show();
-    setInterval(AudienceInfo.show, 10 * 1000); // Refresh every 10 sec
-    setInterval(PoisInfo.show, 30 * 1000); // Refresh every 30 sec
-    setInterval(Twitter.show, 60 * 1000); // Refresh each minute
-    setInterval(Facebook.show, 60 * 1000); // Refresh each minute
+    setInterval(AudienceInfo.show, 30 * 1000); // Refresh every 30 sec
+    setInterval(PoisInfo.show, 60 * 1000); // Refresh every minute
+    setInterval(Twitter.show, 120 * 1000); // Refresh every 2 minutes
+    setInterval(Facebook.show, 120 * 1000); // Refresh every 2 minutes
     setInterval(CollecteIndoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(CollecteOutdoor.show, 12 * 60 * 60 * 1000); // Refresh twice a day
     setInterval(facebookPost.refresh, 60 * 60 * 1000); // Refresh hourly

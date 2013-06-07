@@ -1,16 +1,20 @@
 {
+    // You’ll need to remove comment in that file before using it (they are not valid)
     "mongo": {
         "host": "",
         "port": "27017",
         "db": "",
-        "collection": ""
+        "collection": "",
+        "refresh": 300000 // each 5 minutes
     },
     "twitter": {
         "search": "mappy",
-        "account_name": "mappy"
+        "account_name": "mappy",
+        "refresh": 300000 // each 5 minutes
     },
     "facebook": {
-        "page_id": "142313619164269"
+        "page_id": "142313619164269",
+        "refresh": 300000 // each 5 minutes
     },
     "indoor": {
         "host": "",
@@ -19,7 +23,8 @@
             "all": ""
         },
         "login":  "",
-        "password": ""
+        "password": "",
+        "refresh": 43200000 // twice a day, 12 * 60 * 60 * 1000
     },
     "xiti": {
         "host": "apirest.atinternet-solutions.com",
@@ -29,6 +34,10 @@
             "ios": ""
         },
         "login":  "",
-        "password": ""
+        "password": "",
+        "refresh": 60000 // each minute
+    },
+    "edito": {
+        "refresh": 60000 // each minute
     }
 }
