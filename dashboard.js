@@ -50,6 +50,9 @@ exports.launch = function(config) {
     };
 
     var refreshPoisNumber = function() {
+        if (!config.mongo.host || !config.mongo.port || !config.mongo.db || !config.mongo.collection) {
+            return; // Stop if no configuration
+        }
         var url = format("mongodb://%s:%s/%s", config.mongo.host, config.mongo.port, config.mongo.db);
         MongoClient.connect(url, function(err, db) {
             if (err) {
@@ -65,23 +68,35 @@ exports.launch = function(config) {
     };
 
     var refreshIndoorInfo = function() {
+        if (!config.indoor.host || !config.indoor.login || !config.indoor.password || !config.indoor.urls.today || !config.indoor.urls.all) {
+            return; // Stop if no configuration
+        }
         fetchHttp(http, 80, config.indoor.host, insertDateInUrl(config.indoor.urls.today), function(result) { indoorToday = result; }, config.indoor.login, config.indoor.password);
         fetchHttp(http, 80, config.indoor.host, config.indoor.urls.all, function(result) { indoorAll = result; }, config.indoor.login, config.indoor.password);
         setTimeout(refreshIndoorInfo, config.indoor.refresh);
     };
 
     var refreshTwittersInfo = function() {
+        if (!config.twitter.search || !config.twitter.account_name) {
+            return; // Stop if no configuration
+        }
         fetchHttp(https, 443, 'api.twitter.com', '/1/users/show.json?screen_name='+config.twitter.search, function(json) { twitterMappyInfo = json;});
         fetchHttp(https, 443, 'search.twitter.com', '/search.json?lang=fr&q='+config.twitter.account_name, function(json) { twitterLastTweets = json; });
         setTimeout(refreshTwittersInfo, config.twitter.refresh);
     };
 
     var refreshFacebookInfo = function() {
+        if (!config.facebook.page_id) {
+            return; // Stop if no configuration
+        }
         fetchHttp(https, 443, 'graph.facebook.com', '/fql?q=SELECT%20fan_count,%20page_url%20FROM%20page%20WHERE%20page_id='+config.facebook.page_id, function(json) { facebookInfo = json;});
         setTimeout(refreshFacebookInfo, config.facebook.refresh);
     };
 
     var refreshAudienceInfo = function() {
+        if (!config.xiti.urls.web || !config.xiti.urls.android || !config.xiti.urls.ios || !config.xiti.login || !config.xiti.password) {
+            return; // Stop if no configuration
+        }
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.web), function(json) { audienceWeb = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.android), function(json) { audienceAndroid = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.ios), function(json) { audienceiPhone = json; }, config.xiti.login, config.xiti.password);
@@ -131,16 +146,23 @@ exports.launch = function(config) {
     });
     app.get('/api/audience/web', function(req, res) {
         console.log('Serving /api/audience/web');
-        var parsed = JSON.parse(audienceWeb);
-        res.send({ count: parsed.Rows[0][1]});
+        var count = 0;
+        if (audienceWeb !== "") {
+            count = JSON.parse(audienceWeb).Rows[0][1];
+        }
+        res.send({ count: count });
     });
     app.get('/api/audience/mobile', function(req, res) {
         console.log('Serving /api/audience/mobile');
-        var parsedAndroid = JSON.parse(audienceAndroid);
-        var parsediPhone = JSON.parse(audienceiPhone);
+        var countAndroid = 0;
+        var countiPhone = 0;
+        if (audienceAndroid !== "" && audienceiPhone !== "") {
+            countAndroid = JSON.parse(audienceAndroid).Rows[0][1];
+            countiPhone = JSON.parse(audienceiPhone).Rows[0][1];
+        }
         res.send({
-            'androidCount': parsedAndroid.Rows[0][1],
-            'iphoneCount': parsediPhone.Rows[0][1]
+            'androidCount': countAndroid,
+            'iphoneCount': countiPhone
         });
     });
     app.get('/api/pois/count', function(req, res) {
