@@ -153,7 +153,10 @@
             $('#audience .web').html(output);
         };
         var displayMobileAudience = function(jsonResponse) {
-            var total = parseInt(jsonResponse.androidCount, 10) + parseInt(jsonResponse.iphoneCount, 10);
+            var total = parseInt(jsonResponse.android, 10) + 
+                parseInt(jsonResponse.iphone, 10) +
+                parseInt(jsonResponse.bkml, 10) +
+                parseInt(jsonResponse.fwb, 10);
             var output = compiled({ count: formatNumber(total)});
             $('#audience .mobile').html(output);
         };

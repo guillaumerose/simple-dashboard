@@ -15,6 +15,8 @@ exports.launch = function(config) {
     var audienceWeb = '';
     var audienceAndroid = '';
     var audienceiPhone = '';
+    var audienceBkml = '';
+    var audienceFwb = '';
     var poisCount = 0;
     var edito = '';
 
@@ -94,12 +96,14 @@ exports.launch = function(config) {
     };
 
     var refreshAudienceInfo = function() {
-        if (!config.xiti.urls.web || !config.xiti.urls.android || !config.xiti.urls.ios || !config.xiti.login || !config.xiti.password) {
+        if (!config.xiti.urls.web || !config.xiti.urls.android || !config.xiti.urls.ios || !config.xiti.urls.bkml || !config.xiti.urls.fwb || !config.xiti.login || !config.xiti.password) {
             return; // Stop if no configuration
         }
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.web), function(json) { audienceWeb = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.android), function(json) { audienceAndroid = json; }, config.xiti.login, config.xiti.password);
         fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.ios), function(json) { audienceiPhone = json; }, config.xiti.login, config.xiti.password);
+        fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.bkml), function(json) { audienceBkml = json; }, config.xiti.login, config.xiti.password);
+        fetchHttp(https, 443, config.xiti.host, insertDateInUrl(config.xiti.urls.fwb), function(json) { audienceFwb = json; }, config.xiti.login, config.xiti.password);
         setTimeout(refreshAudienceInfo, config.xiti.refresh);
     };
 
@@ -154,16 +158,19 @@ exports.launch = function(config) {
     });
     app.get('/api/audience/mobile', function(req, res) {
         console.log('Serving /api/audience/mobile');
-        var countAndroid = 0;
-        var countiPhone = 0;
-        if (audienceAndroid !== "" && audienceiPhone !== "") {
-            countAndroid = JSON.parse(audienceAndroid).Rows[0][1];
-            countiPhone = JSON.parse(audienceiPhone).Rows[0][1];
+        var count = {
+            android: 0,
+            iphone: 0,
+            bkml: 0,
+            fwb: 0
+        };
+        if (audienceAndroid !== "" && audienceiPhone !== "" && audienceBkml !== ""&& audienceFwb !== "") {
+            count.android = JSON.parse(audienceAndroid).Rows[0][1];
+            count.iphone = JSON.parse(audienceiPhone).Rows[0][1];
+            count.bkml = JSON.parse(audienceBkml).Rows[0][1];
+            count.fwb = JSON.parse(audienceFwb).Rows[0][1];
         }
-        res.send({
-            'androidCount': countAndroid,
-            'iphoneCount': countiPhone
-        });
+        res.send(JSON.stringify(count));
     });
     app.get('/api/pois/count', function(req, res) {
         console.log('Serving /api/pois/count');

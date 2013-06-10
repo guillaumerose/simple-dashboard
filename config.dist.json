@@ -31,7 +31,9 @@
         "urls": {
             "web": "",
             "android": "",
-            "ios": ""
+            "ios": "",
+            "bkml": "",
+            "fwb": ""
         },
         "login":  "",
         "password": "",
