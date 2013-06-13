@@ -5,7 +5,10 @@ exports.launch = function(config) {
         express = require('express'),
         format =  require('util').format,
         fs = require('fs');
-        MongoClient = require('mongodb').MongoClient;
+        MongoClient = require('mongodb').MongoClient,
+        Twit = require('twit');
+
+    var T = new Twit(config.twitter);
 
     var twitterMappyInfo = '';
     var twitterLastTweets = '';
@@ -82,8 +85,12 @@ exports.launch = function(config) {
         if (!config.twitter.search || !config.twitter.account_name) {
             return; // Stop if no configuration
         }
-        fetchHttp(https, 443, 'api.twitter.com', '/1/users/show.json?screen_name='+config.twitter.search, function(json) { twitterMappyInfo = json;});
-        fetchHttp(https, 443, 'search.twitter.com', '/search.json?lang=fr&q='+config.twitter.account_name, function(json) { twitterLastTweets = json; });
+        T.get('search/tweets', { q: config.twitter.search, lang: 'fr' }, function(err, reply) {
+            if (!err) twitterLastTweets = reply;
+        });
+        T.get('users/show', { screen_name: config.twitter.account_name }, function(err, reply) {
+            if (!err) twitterMappyInfo = reply;
+        });
         setTimeout(refreshTwittersInfo, config.twitter.refresh);
     };
 

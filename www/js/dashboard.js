@@ -25,7 +25,7 @@
         };
 
         var displayLastTweets = function(results) {
-            var lastTweets = _.first(results.results, 3);
+            var lastTweets = _.first(results.statuses, 3);
 
             var output = '';
             _.each(lastTweets, function(tweet) {

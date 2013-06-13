@@ -8,6 +8,11 @@
         "refresh": 300000 // each 5 minutes
     },
     "twitter": {
+        // See https://dev.twitter.com/docs/auth/tokens-devtwittercom to generate a token
+        "consumer_key": "...",
+        "consumer_secret": "...",
+        "access_token": "...",
+        "access_token_secret": "...",
         "search": "mappy",
         "account_name": "mappy",
         "refresh": 300000 // each 5 minutes

@@ -6,7 +6,7 @@ It’s composed of 2 parts, a node server and a client page.
 The server fetches data from twitter, mongodb, xiti, text file and geoposition points from a JSON source.
 All data are consumed by a web page refreshing frequently thoses data.
 
-To use it, you‘ll need to create a `config.json` file (based on `config.dist.json`), install modules `express` and `mongodb`, then launch :
+To use it, you‘ll need to create a `config.json` file (based on `config.dist.json`), install modules `express`, `mongodb` and `twit`, then launch :
 
 ```bash
 node launcher.js
