@@ -189,6 +189,6 @@ exports.launch = function(config) {
         var objResponse = {'edito':edito};
         res.send(JSON.stringify(objResponse));
     });
-    app.listen(8888);
-    console.log('Mappy server listening on 8888');
+    app.listen(config.server.port);
+    console.log('Mappy Dashboard server listening on '+config.server.port);
 };

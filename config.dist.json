@@ -1,5 +1,8 @@
 {
     // You’ll need to remove comment in that file before using it (they are not valid)
+    "server": {
+        "port": 8000
+    },
     "mongo": {
         "host": "",
         "port": "27017",
