@@ -19,13 +19,17 @@ To use it, you‘ll need to :
   1. launch `npm install` to install dependencies,
   2. create a `config.json` file (copy `config.dist.json`) and adapt configuration to your needs, 
   3. in `www/resources`, you may also create `edito.txt` (copy `edito.dist.txt`) and `outdoor.json` (copy `outdoor.dist.json`),
-  4. then launch the server with `node launcher.js`,
+  4. then launch the server with `make run`,
   5. open your browser on `http://localhost:8000/`.
 
 ## Run in production
 
-To deploy on a server, use `./prod.sh`.
+To run program as a service, run `make start` (and `make stop` to stop it).
 
 ## Develop
 
-During development, you can use `npm run-script run` (or `nodemon launcher.js`) which will reload the app when a file changes.
+During development, you can use `make run` or `make debug`. Both will reload the app when a file changes.
+
+You can launch unit test using `make unit` or `make tdd` (Unit test will be launch each time a test changes).
+
+You can launch functional test with `make func`. That will launch test against the API with frisby.

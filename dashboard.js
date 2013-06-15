@@ -1,13 +1,26 @@
-exports.launch = function(config) {
+var http = require("http"),
+    https = require("https"),
+    express = require('express'),
+    format =  require('util').format,
+    fs = require('fs');
+    MongoClient = require('mongodb').MongoClient,
+    Twit = require('twit');
 
-    var http = require("http"),
-        https = require("https"),
-        express = require('express'),
-        format =  require('util').format,
-        fs = require('fs');
-        MongoClient = require('mongodb').MongoClient,
-        Twit = require('twit');
+var config = null;
 
+var configure = function(configuration) {
+    config = configuration
+}
+
+var insertDateInUrl = function(url) {
+    var date = new Date();
+    var y = ''+date.getUTCFullYear();
+    var m = (date.getUTCMonth() < 10) ? '0'+(date.getUTCMonth()+1) : ''+(date.getUTCMonth()+1);
+    var d = (date.getUTCDate() < 10) ? '0'+date.getUTCDate() : ''+date.getUTCDate();
+    return format(url, y, m, d, y, m, d);
+};
+
+var launch = function() {
     var T = new Twit(config.twitter);
 
     var twitterMappyInfo = '';
@@ -23,13 +36,6 @@ exports.launch = function(config) {
     var poisCount = 0;
     var edito = '';
 
-    var insertDateInUrl = function(url) {
-        var date = new Date();
-        var y = ''+date.getUTCFullYear();
-        var m = (date.getUTCMonth() < 10) ? '0'+(date.getUTCMonth()+1) : ''+(date.getUTCMonth()+1);
-        var d = (date.getUTCDate() < 10) ? '0'+date.getUTCDate() : ''+date.getUTCDate();
-        return format(url, y, m, d, y, m, d);
-    };
 
     var fetchHttp = function(requestor, port, host, path, callback, username, password) {
         var options = { 'host': host, 'port': port, 'path': path, method: 'GET'};
@@ -143,16 +149,16 @@ exports.launch = function(config) {
         res.send(twitterLastTweets);
     });
     app.get('/api/facebook/fans', function(req, res) {
-        console.log('Serving /api/facebook/fans');
-        var parsed = JSON.parse(facebookInfo);
-        res.send(JSON.stringify(parsed.data[0]));
+        console.log('Serving /api/facebook/fans'); res.setHeader('content-type', 'application/json');        var parsed = JSON.parse(facebookInfo); res.send(JSON.stringify(parsed.data[0]));
     });
     app.get('/api/indoor/paris/today', function(req, res) {
         console.log('Serving /api/indoor/paris/today');
+        res.setHeader('content-type', 'application/json');
         res.send(indoorToday);
     });
     app.get('/api/indoor/paris', function(req, res) {
         console.log('Serving /api/indoor/paris');
+        res.setHeader('content-type', 'application/json');
         res.send(indoorAll);
     });
     app.get('/api/audience/web', function(req, res) {
@@ -191,4 +197,9 @@ exports.launch = function(config) {
     });
     app.listen(config.server.port);
     console.log('Mappy Dashboard server listening on '+config.server.port);
+};
+
+module.exports = {
+    'configure': configure,
+    'launch': launch
 };
