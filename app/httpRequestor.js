@@ -4,7 +4,10 @@ var httpRequestor = function(config) {
 
     if (!config.port || !config.host || !config.urls || config.urls.length === 0 || !config.refresh) {
         console.log('Bad httpRequestor configuration');
-        return; // Stop if no configuration
+        return {
+            "launch": function() { return this; },
+            "values": function() { return values; }
+        }; // Stop if no configuration
     }
 
      var format =  require('util').format;
@@ -57,9 +60,7 @@ var httpRequestor = function(config) {
 
     return {
         "launch": fetch,
-        "values": function() {
-            return values;
-        }
+        "values": function() { return values; }
     }
 }
 

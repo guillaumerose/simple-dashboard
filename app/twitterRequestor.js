@@ -1,11 +1,14 @@
 var twitterRequestor = function(config) {
 
+    var values = {};
+
     if (!config.consumer_key || !config.consumer_secret || !config.access_token || !config.access_token_secret || !config.search || !config.account_name || !config.refresh) {
         console.log('Bad twitterRequestor configuration');
-        return; // Stop if no configuration
+        return {
+            "launch": function() { return this; },
+            "value": function() { return values; }
+        }; // Stop if no configuration
     }
-
-    var values = {};
 
     var Twit = require('twit');
     var T = new Twit(config);
@@ -26,9 +29,7 @@ var twitterRequestor = function(config) {
 
     return {
         "launch": fetch,
-        "values": function() {
-            return values;
-        }
+        "values": function() { return values; }
     }
 }
 

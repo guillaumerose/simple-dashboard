@@ -1,11 +1,15 @@
 var mongoRequestor = function(config) {
 
+    var value = 0;
+
     if (!config.host || !config.port || !config.db || !config.collection || !config.refresh) {
         console.log('Bad mongoRequestor configuration');
-        return; // Stop if no configuration
+        return {
+            "launch": function() { return this; },
+            "value": function() { return value; }
+        }; // Stop if no configuration
     }
 
-    var value = 0;
     var format =  require('util').format;
     var url = format("mongodb://%s:%s/%s", config.host, config.port, config.db);
     var MongoClient = require('mongodb').MongoClient;
@@ -16,7 +20,7 @@ var mongoRequestor = function(config) {
                 console.log('MongoDB error :', err);
             } else {
                 db.collection(config.collection).count(function(err, count) {
-                    console.log("Found ", count, " entry in that collection");
+                    console.log("Found ", count, " entries in that collection");
                     response = parseInt(count, 10);
                 });
             }
@@ -27,9 +31,7 @@ var mongoRequestor = function(config) {
 
     return {
         "launch": fetch,
-        "value": function() {
-            return value;
-        }
+        "value": function() { return value; }
     }
 }
 

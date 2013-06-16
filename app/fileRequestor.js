@@ -1,12 +1,15 @@
 var fileRequestor = function(config) {
 
+    var value = "";
+
     if (!config.file || !config.refresh) {
         console.log('Bad fileRequestor configuration');
-        return; // Stop if no configuration
+        return {
+            "launch": function() { return this; },
+            "value": function() { return value; }
+        }; // Stop if no configuration
     }
 
-
-    var value = "";
     var fs = require('fs');
 
     var fetchFileContent = function(path, callback) {
@@ -26,9 +29,7 @@ var fileRequestor = function(config) {
 
     return {
         "launch": fetch,
-        "value": function() {
-            return value;
-        }
+        "value": function() { return value; }
     }
 }
 

@@ -17,7 +17,7 @@ All of those data are consumed by a web page refreshing them frequently.
 
 To use it, you‘ll need to :
   1. launch `npm install` to install dependencies,
-  2. create a `config.json` file (copy `config.dist.json`) and adapt configuration to your needs, 
+  2. in `app`, create a `config.json` file (copy `config.dist.json`) and adapt configuration to your needs, 
   3. in `www/resources`, you may also create `edito.txt` (copy `edito.dist.txt`) and `outdoor.json` (copy `outdoor.dist.json`),
   4. then launch the server with `make run`,
   5. open your browser on `http://localhost:8000/`.
