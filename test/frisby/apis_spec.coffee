@@ -43,3 +43,40 @@ frisby
     .expectHeaderContains('content-type', 'application/json')
     .toss()
 
+frisby
+    .create('Get pois count')
+    .get(HOST + '/api/pois/count')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSONTypes({ count: Number })
+    .toss()
+
+frisby
+    .create('Get web audience')
+    .get(HOST + '/api/audience/web')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSONTypes({ count: Number })
+    .toss()
+
+frisby
+    .create('Get mobile audience')
+    .get(HOST + '/api/audience/mobile')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSONTypes({ 
+        android: Number,
+        iphone: Number,
+        bkml: Number,
+        fwb: Number
+    })
+    .toss()
+
+frisby
+    .create('Get edito')
+    .get(HOST + '/api/edito/infos')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .expectJSONTypes({ edito: String })
+    .toss()
+

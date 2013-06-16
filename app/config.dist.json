@@ -48,6 +48,7 @@
         "refresh": 60000 // each minute
     },
     "edito": {
+        "file": "./www/resources/edito.txt",
         "refresh": 60000 // each minute
     }
 }

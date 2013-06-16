@@ -2,9 +2,8 @@ var http = require("http"),
     https = require("https"),
     express = require('express'),
     format =  require('util').format,
-    fs = require('fs');
-    MongoClient = require('mongodb').MongoClient,
     Twit = require('twit');
+
 
 var config = null;
 
@@ -33,9 +32,14 @@ var launch = function() {
     var audienceiPhone = '';
     var audienceBkml = '';
     var audienceFwb = '';
-    var poisCount = 0;
     var edito = '';
 
+
+    var poiRequestor = require('./mongoRequestor')(config.mongo);
+    poiRequestor.launch();
+
+    var editoRequestor = require('./fileRequestor')(config.edito);
+    editoRequestor.launch();
 
     var fetchHttp = function(requestor, port, host, path, callback, username, password) {
         var options = { 'host': host, 'port': port, 'path': path, method: 'GET'};
@@ -49,33 +53,6 @@ var launch = function() {
                 callback(json);
             });
         }).end();
-    };
-
-    var fetchFileContent = function(path, callback) {
-        fs.readFile(path, 'utf8', function(err, data) {
-            if (err) {
-                return console.log(err);
-            }
-            callback(data);
-        });
-    };
-
-    var refreshPoisNumber = function() {
-        if (!config.mongo.host || !config.mongo.port || !config.mongo.db || !config.mongo.collection) {
-            return; // Stop if no configuration
-        }
-        var url = format("mongodb://%s:%s/%s", config.mongo.host, config.mongo.port, config.mongo.db);
-        MongoClient.connect(url, function(err, db) {
-            if (err) {
-                console.log('MongoDB error :', err);
-            } else {
-                db.collection(config.mongo.collection).count(function(err, count) {
-                    console.log("Found ", count, " POIs in database");
-                    poisCount = parseInt(count, 10);
-                });
-            }
-        });
-        setTimeout(refreshPoisNumber, config.mongo.refresh);
     };
 
     var refreshIndoorInfo = function() {
@@ -120,17 +97,10 @@ var launch = function() {
         setTimeout(refreshAudienceInfo, config.xiti.refresh);
     };
 
-    var refreshEdito = function() {
-        fetchFileContent('./www/resources/edito.txt', function (data) { edito = data; });
-        setTimeout(refreshEdito, config.edito.refresh);
-    };
-
-    refreshPoisNumber();
     refreshIndoorInfo();
     refreshAudienceInfo();
     refreshTwittersInfo();
     refreshFacebookInfo();
-    refreshEdito();
 
     var app = express();
     app.configure(function() {
@@ -167,14 +137,20 @@ var launch = function() {
     });
     app.get('/api/audience/web', function(req, res) {
         console.log('Serving /api/audience/web');
+        res.setHeader('content-type', 'application/json');
         var count = 0;
         if (audienceWeb !== "") {
-            count = JSON.parse(audienceWeb).Rows[0][1];
+            try {
+                count = JSON.parse(audienceWeb).Rows[0][1];
+            } catch(e) {
+                console.log('Error while parsing audience response', e);
+            }
         }
         res.send({ count: count });
     });
     app.get('/api/audience/mobile', function(req, res) {
         console.log('Serving /api/audience/mobile');
+        res.setHeader('content-type', 'application/json');
         var count = {
             android: 0,
             iphone: 0,
@@ -182,21 +158,27 @@ var launch = function() {
             fwb: 0
         };
         if (audienceAndroid !== "" && audienceiPhone !== "" && audienceBkml !== ""&& audienceFwb !== "") {
-            count.android = JSON.parse(audienceAndroid).Rows[0][1];
-            count.iphone = JSON.parse(audienceiPhone).Rows[0][1];
-            count.bkml = JSON.parse(audienceBkml).Rows[0][1];
-            count.fwb = JSON.parse(audienceFwb).Rows[0][1];
+            try {
+                count.android = JSON.parse(audienceAndroid).Rows[0][1];
+                count.iphone = JSON.parse(audienceiPhone).Rows[0][1];
+                count.bkml = JSON.parse(audienceBkml).Rows[0][1];
+                count.fwb = JSON.parse(audienceFwb).Rows[0][1];
+            } catch(e) {
+                console.log('Error while parsing audience response', e);
+            }
         }
         res.send(JSON.stringify(count));
     });
     app.get('/api/pois/count', function(req, res) {
         console.log('Serving /api/pois/count');
-        var objResponse = {'count':poisCount};
+        res.setHeader('content-type', 'application/json');
+        var objResponse = {'count': poiRequestor.value() };
         res.send(JSON.stringify(objResponse));
     });
     app.get('/api/edito/infos', function(req, res) {
         console.log('Serving /api/edito/infos');
-        var objResponse = {'edito':edito};
+        res.setHeader('content-type', 'application/json');
+        var objResponse = {'edito': editoRequestor.value() };
         res.send(JSON.stringify(objResponse));
     });
     app.listen(config.server.port);
