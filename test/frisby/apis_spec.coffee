@@ -20,7 +20,7 @@ frisby
 
 frisby
     .create('Get last tweets')
-    .get(HOST + '/api/twitter/lastTweets')
+    .get(HOST + '/api/twitter/tweets')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
     .toss()
@@ -39,6 +39,13 @@ frisby
 frisby
     .create('Get indoor Paris data')
     .get(HOST + '/api/indoor/paris')
+    .expectStatus(200)
+    .expectHeaderContains('content-type', 'application/json')
+    .toss()
+
+frisby
+    .create('Get indoor Paris today’s data')
+    .get(HOST + '/api/indoor/paris/today')
     .expectStatus(200)
     .expectHeaderContains('content-type', 'application/json')
     .toss()

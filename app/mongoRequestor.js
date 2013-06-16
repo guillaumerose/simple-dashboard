@@ -1,6 +1,6 @@
 var mongoRequestor = function(config) {
 
-    if (!config.host || !config.port || !config.db || !config.collection) {
+    if (!config.host || !config.port || !config.db || !config.collection || !config.refresh) {
         console.log('Bad mongoRequestor configuration');
         return; // Stop if no configuration
     }
@@ -22,6 +22,7 @@ var mongoRequestor = function(config) {
             }
         });
         setTimeout(fetch, config.refresh);
+        return this;
     }
 
     return {

@@ -21,29 +21,35 @@
         "refresh": 300000 // each 5 minutes
     },
     "facebook": {
-        "page_id": "142313619164269",
+        "protocol": "http",
+        "host": "graph.facebook.com",
+        "urls": { 
+            "fans": [ "/fql?q=SELECT%20fan_count,%20page_url%20FROM%20page%20WHERE%20page_id=", "142313619164269" ]
+        },
         "refresh": 300000 // each 5 minutes
     },
     "indoor": {
+        "protocol": "http",
         "host": "",
         "urls": {
-            "today": "",
-            "all": ""
+            "today": [ "", "date" ],
+            "all": [ "" ]
         },
-        "login":  "",
+        "username":  "",
         "password": "",
         "refresh": 43200000 // twice a day, 12 * 60 * 60 * 1000
     },
     "xiti": {
+        "protocol": "https",
         "host": "apirest.atinternet-solutions.com",
         "urls": {
-            "web": "",
-            "android": "",
-            "ios": "",
-            "bkml": "",
-            "fwb": ""
+            "web": [ "", "date", "date" ],
+            "android": [ "", "date", "date" ],
+            "iphone": [ "", "date", "date" ],
+            "bkml": [ "", "date", "date" ],
+            "fwb": [ "", "date", "date" ]
         },
-        "login":  "",
+        "username":  "",
         "password": "",
         "refresh": 60000 // each minute
     },

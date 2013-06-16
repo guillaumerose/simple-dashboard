@@ -44,7 +44,7 @@
                     displayFollowers({ followers_count: 879}); // Fake
                 });
 
-                $.getJSON('/api/twitter/lastTweets').done(displayLastTweets);
+                $.getJSON('/api/twitter/tweets').done(displayLastTweets);
             }
         };
     })();

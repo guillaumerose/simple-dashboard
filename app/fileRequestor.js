@@ -21,6 +21,7 @@ var fileRequestor = function(config) {
     var fetch = function() {
         fetchFileContent(config.file, function (data) { value = data; });
         setTimeout(fetch, config.refresh);
+        return this;
     };
 
     return {
