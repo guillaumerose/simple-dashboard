@@ -10,15 +10,15 @@ func:
 	./node_modules/.bin/jasmine-node --coffee --verbose ./test/frisby
 
 debug:
-	./node_modules/.bin/nodemon --debug launcher.js
+	./node_modules/.bin/nodemon --debug app/launcher.js
 
 start:
-	./node_modules/.bin/forever start launcher.js
+	./node_modules/.bin/forever start app/launcher.js
 
 stop:
-	./node_modules/.bin/forever stop launcher.js
+	./node_modules/.bin/forever stop app/launcher.js
 
 run:
-	./node_modules/.bin/nodemon launcher.js
+	./node_modules/.bin/nodemon app/launcher.js
 
 .PHONY: test

@@ -135,21 +135,25 @@ var launch = function() {
     var app = express();
     app.configure(function() {
         app.use(app.router);
-        app.use(express.static( __dirname+'/www'));
+        app.use(express.static( __dirname+'/../www'));
     });
     app.configure('production', function() {
         app.use(express.cache(1000 * 60 * 60));
     });
     app.get('/api/twitter/infos', function(req, res) {
         console.log('Serving /api/twitter/infos');
+        res.setHeader('content-type', 'application/json');
         res.send(twitterMappyInfo);
     });
     app.get('/api/twitter/lastTweets', function(req, res) {
         console.log('Serving /api/twitter/lastTweets');
+        res.setHeader('content-type', 'application/json');
         res.send(twitterLastTweets);
     });
     app.get('/api/facebook/fans', function(req, res) {
-        console.log('Serving /api/facebook/fans'); res.setHeader('content-type', 'application/json');        var parsed = JSON.parse(facebookInfo); res.send(JSON.stringify(parsed.data[0]));
+        console.log('Serving /api/facebook/fans');
+        res.setHeader('content-type', 'application/json');
+        var parsed = JSON.parse(facebookInfo); res.send(JSON.stringify(parsed.data[0]));
     });
     app.get('/api/indoor/paris/today', function(req, res) {
         console.log('Serving /api/indoor/paris/today');

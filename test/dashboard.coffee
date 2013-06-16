@@ -1,5 +1,5 @@
 should = require 'should'
-dashboard = require '../dashboard'
+dashboard = require '../app/dashboard'
 
 describe 'Dashboard', () ->
    describe '#test', () ->
