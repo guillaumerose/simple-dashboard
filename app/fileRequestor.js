@@ -30,7 +30,7 @@ var fileRequestor = function(config) {
     return {
         "launch": fetch,
         "value": function() { return value; }
-    }
-}
+    };
+};
 
 module.exports = fileRequestor;

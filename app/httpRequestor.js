@@ -50,9 +50,9 @@ var httpRequestor = function(config) {
     var fetch = function() {
         for (var url in config.urls) {
             var path = fillParameters(config.urls[url]);
-            get(path, function(json) {
+            get(path, function(url, json) {
                 values[url] = json;
-            });
+            }.bind(this, url));
         }
         setTimeout(fetch, config.refresh);
         return this;
@@ -61,7 +61,7 @@ var httpRequestor = function(config) {
     return {
         "launch": fetch,
         "values": function() { return values; }
-    }
-}
+    };
+};
 
 module.exports = httpRequestor;

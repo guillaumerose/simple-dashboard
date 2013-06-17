@@ -30,7 +30,7 @@ var twitterRequestor = function(config) {
     return {
         "launch": fetch,
         "values": function() { return values; }
-    }
-}
+    };
+};
 
 module.exports = twitterRequestor;

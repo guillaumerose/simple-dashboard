@@ -21,18 +21,18 @@ var dashboard = function(config) {
         app.get('/api/twitter/infos', function(req, res) {
             console.log('Serving /api/twitter/infos');
             res.setHeader('content-type', 'application/json');
-            res.send(twitterRequestor.values()['info']);
+            res.send(twitterRequestor.values().info);
         });
         app.get('/api/twitter/tweets', function(req, res) {
             console.log('Serving /api/twitter/lastTweets');
             res.setHeader('content-type', 'application/json');
-            res.send(twitterRequestor.values()['tweets']);
+            res.send(twitterRequestor.values().tweets);
         });
         app.get('/api/facebook/fans', function(req, res) {
             console.log('Serving /api/facebook/fans');
             res.setHeader('content-type', 'application/json');
             try {
-                var value = facebookRequestor.values()["fans"];
+                var value = facebookRequestor.values().fans;
                 var parsed = JSON.parse(value); 
                 res.send(JSON.stringify(parsed.data[0]));
             } catch(e) {
@@ -42,21 +42,21 @@ var dashboard = function(config) {
         app.get('/api/indoor/paris', function(req, res) {
             console.log('Serving /api/indoor/paris');
             res.setHeader('content-type', 'application/json');
-            res.send(indoorTodayRequestor.values()['all']);
+            res.send(indoorTodayRequestor.values().all);
         });
         app.get('/api/indoor/paris/today', function(req, res) {
             console.log('Serving /api/indoor/paris/today');
             res.setHeader('content-type', 'application/json');
-            res.send(indoorTodayRequestor.values()['today']);
+            res.send(indoorTodayRequestor.values().today);
         });
         app.get('/api/audience/web', function(req, res) {
             console.log('Serving /api/audience/web');
             res.setHeader('content-type', 'application/json');
             var values = xitiRequestor.values();
             var count = 0;
-            if (!values || values.length === 0) {
+            if (values) {
                 try {
-                    count = JSON.parse(values["web"]).Rows[0][1];
+                    count = JSON.parse(values.web).Rows[0][1];
                 } catch(e) {
                     console.log('Error while parsing web audience response', e);
                 }
@@ -73,12 +73,12 @@ var dashboard = function(config) {
                 bkml: 0,
                 fwb: 0
             };
-            if (!values || values.length === 0) {
+            if (values) {
                 try {
-                    count.android = JSON.parse(values["android"]).Rows[0][1];
-                    count.iphone = JSON.parse(values["iphone"]).Rows[0][1];
-                    count.bkml = JSON.parse(values["bkml"]).Rows[0][1];
-                    count.fwb = JSON.parse(values["fwb"]).Rows[0][1];
+                    count.android = JSON.parse(values.android).Rows[0][1];
+                    count.iphone = JSON.parse(values.iphone).Rows[0][1];
+                    count.bkml = JSON.parse(values.bkml).Rows[0][1];
+                    count.fwb = JSON.parse(values.fwb).Rows[0][1];
                 } catch(e) {
                     console.log('Error while parsing mobile audience response', e);
                 }
@@ -103,7 +103,7 @@ var dashboard = function(config) {
 
     return {
         "launch": launch
-    }
+    };
 };
 
 module.exports = dashboard;

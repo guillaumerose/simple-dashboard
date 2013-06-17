@@ -21,18 +21,18 @@ var mongoRequestor = function(config) {
             } else {
                 db.collection(config.collection).count(function(err, count) {
                     console.log("Found ", count, " entries in that collection");
-                    response = parseInt(count, 10);
+                    value = parseInt(count, 10);
                 });
             }
         });
         setTimeout(fetch, config.refresh);
         return this;
-    }
+    };
 
     return {
         "launch": fetch,
         "value": function() { return value; }
-    }
-}
+    };
+};
 
 module.exports = mongoRequestor;
