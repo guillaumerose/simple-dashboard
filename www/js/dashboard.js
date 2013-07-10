@@ -201,7 +201,7 @@
     setInterval(facebookPost.refresh, 60 * 60 * 1000); // Refresh hourly
     setInterval(Edito.show, 60 * 1000); // Refresh each minute
 
-    $('#collecte .outdoor').hide();
+    $('#collecte .indoor').hide();
     var iMapAlternate = 0;
     setInterval(function alternateMaps() {
         if (iMapAlternate % 2 === 0) {
