@@ -84,7 +84,13 @@
         var map = new Mappy.api.map.Map({ container:'#indoorMap' });
         map.setCenter(new Mappy.api.geo.Coordinates(2.35099,48.85676),7);
 
-        var showIndoor = function(markerLayer, image, results) {
+        var parisLayer = new Mappy.api.map.layer.MarkerLayer(30);
+        map.addLayer(parisLayer);
+
+        var todayLayer = new Mappy.api.map.layer.MarkerLayer(31);
+        map.addLayer(todayLayer);
+
+        var showIndoor = function(markerLayer, image, conglomerated, results) {
             markerLayer.clean();
             _.each(results, function(point) {
                 var icon = new Mappy.api.ui.Icon(Mappy.api.ui.Icon.DEFAULT);
@@ -92,13 +98,15 @@
                 var marker = new Mappy.api.map.Marker(new Mappy.api.geo.Coordinates(point.lng, point.lat), icon);
                 markerLayer.addMarker(marker);
             });
-            map.addLayer(markerLayer);
+            if(conglomerated === true) {
+                markerLayer.conglomerate();
+            }
         };
 
         return {
             'show': function() {
-                $.getJSON('/api/indoor/paris').done(_.partial(showIndoor, new Mappy.api.map.layer.MarkerLayer(30), '/img/markerB_small.png'));
-                $.getJSON('/api/indoor/paris/today').done(_.partial(showIndoor, new Mappy.api.map.layer.MarkerLayer(31), '/img/markerV_small.png'));
+                $.getJSON('/api/indoor/paris').done(_.partial(showIndoor, parisLayer, '/img/markerB_small.png', true));
+                $.getJSON('/api/indoor/paris/today').done(_.partial(showIndoor, todayLayer, '/img/markerV_small.png', false));
             }
         };
     })();
@@ -193,7 +201,7 @@
     setInterval(facebookPost.refresh, 60 * 60 * 1000); // Refresh hourly
     setInterval(Edito.show, 60 * 1000); // Refresh each minute
 
-    $('#collecte .indoor').hide();
+    $('#collecte .outdoor').hide();
     var iMapAlternate = 0;
     setInterval(function alternateMaps() {
         if (iMapAlternate % 2 === 0) {
