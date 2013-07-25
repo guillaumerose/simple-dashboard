@@ -56,7 +56,7 @@ var dashboard = function(config) {
             var count = 0;
             if (values) {
                 try {
-                    count = JSON.parse(values.web).Rows[0][1];
+                    count = parseInt(JSON.parse(values.web).Rows[0][1], 10);
                 } catch(e) {
                     console.log('Error while parsing web audience response', e);
                 }
@@ -75,10 +75,10 @@ var dashboard = function(config) {
             };
             if (values) {
                 try {
-                    count.android = JSON.parse(values.android).Rows[0][1];
-                    count.iphone = JSON.parse(values.iphone).Rows[0][1];
-                    count.bkml = JSON.parse(values.bkml).Rows[0][1];
-                    count.fwb = JSON.parse(values.fwb).Rows[0][1];
+                    count.android = parseInt(JSON.parse(values.android).Rows[0][1], 10);
+                    count.iphone = parseInt(JSON.parse(values.iphone).Rows[0][1], 10);
+                    count.bkml = parseInt(JSON.parse(values.bkml).Rows[0][1], 10);
+                    count.fwb = parseInt(JSON.parse(values.fwb).Rows[0][1], 10);
                 } catch(e) {
                     console.log('Error while parsing mobile audience response', e);
                 }
