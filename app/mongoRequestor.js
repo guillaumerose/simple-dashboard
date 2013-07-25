@@ -18,10 +18,14 @@ var mongoRequestor = function(config) {
         MongoClient.connect(url, function(err, db) {
             if (err) {
                 console.log('MongoDB error :', err);
+                if (db) {
+                    db.close();
+                }
             } else {
                 db.collection(config.collection).count(function(err, count) {
                     console.log("Found ", count, " entries in that collection");
                     value = parseInt(count, 10);
+                    db.close();
                 });
             }
         });
