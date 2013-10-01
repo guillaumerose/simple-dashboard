@@ -22,7 +22,7 @@ var httpRequestor = function(config) {
                 if (urlArray[i] === "date") {
                     var date = new Date();
                     var y = ''+date.getUTCFullYear();
-                    var m = (date.getUTCMonth() < 10) ? '0'+(date.getUTCMonth()+1) : ''+(date.getUTCMonth()+1);
+                    var m = ((date.getUTCMonth()+1) < 10) ? '0'+(date.getUTCMonth()+1) : ''+(date.getUTCMonth()+1);
                     var d = (date.getUTCDate() < 10) ? '0'+date.getUTCDate() : ''+date.getUTCDate();
                     url = format(url, y, m, d);
                 } else {
