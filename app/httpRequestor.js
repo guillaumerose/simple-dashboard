@@ -44,6 +44,8 @@ var httpRequestor = function(config) {
             }).on('end', function() {
                 callback(json);
             });
+        }).on('error', function(err) {
+            callback({});
         }).end();
     };
 
