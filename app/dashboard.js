@@ -12,24 +12,26 @@ var dashboard = function(config) {
         var express = require('express');
         var app = express();
         app.configure(function() {
-            app.use(app.router);
             app.use(express.static( __dirname+'/../www'));
+            app.use(function(req, res, next){
+                // Logging all incoming request
+                console.log('< %s %s', req.method, req.url);
+                next();
+            });
+            app.use(app.router);
         });
         app.configure('production', function() {
             app.use(express.cache(1000 * 60 * 60));
         });
         app.get('/api/twitter/infos', function(req, res) {
-            console.log('Serving /api/twitter/infos');
             res.setHeader('content-type', 'application/json');
             res.send(twitterRequestor.values().info);
         });
         app.get('/api/twitter/tweets', function(req, res) {
-            console.log('Serving /api/twitter/lastTweets');
             res.setHeader('content-type', 'application/json');
             res.send(twitterRequestor.values().tweets);
         });
         app.get('/api/facebook/fans', function(req, res) {
-            console.log('Serving /api/facebook/fans');
             res.setHeader('content-type', 'application/json');
             try {
                 var value = facebookRequestor.values().fans;
@@ -40,17 +42,14 @@ var dashboard = function(config) {
             }
         });
         app.get('/api/indoor/paris', function(req, res) {
-            console.log('Serving /api/indoor/paris');
             res.setHeader('content-type', 'application/json');
             res.send(indoorTodayRequestor.values().all);
         });
         app.get('/api/indoor/paris/today', function(req, res) {
-            console.log('Serving /api/indoor/paris/today');
             res.setHeader('content-type', 'application/json');
             res.send(indoorTodayRequestor.values().today);
         });
         app.get('/api/audience/web', function(req, res) {
-            console.log('Serving /api/audience/web');
             res.setHeader('content-type', 'application/json');
             var values = xitiRequestor.values();
             var count = 0;
@@ -64,7 +63,6 @@ var dashboard = function(config) {
             res.send({ count: count });
         });
         app.get('/api/audience/mobile', function(req, res) {
-            console.log('Serving /api/audience/mobile');
             res.setHeader('content-type', 'application/json');
             var values = xitiRequestor.values();
             var count = {
@@ -86,13 +84,11 @@ var dashboard = function(config) {
             res.send(JSON.stringify(count));
         });
         app.get('/api/pois/count', function(req, res) {
-            console.log('Serving /api/pois/count');
             res.setHeader('content-type', 'application/json');
             var objResponse = {'count': poiRequestor.value() };
             res.send(JSON.stringify(objResponse));
         });
         app.get('/api/edito/infos', function(req, res) {
-            console.log('Serving /api/edito/infos');
             res.setHeader('content-type', 'application/json');
             var objResponse = {'edito': editoRequestor.value() };
             res.send(JSON.stringify(objResponse));
