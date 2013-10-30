@@ -2,6 +2,8 @@
 
 That dashboard has been made during a 24 hours hackaton at [Mappy](http://fr.mappy.com).
 
+![Example](https://raw.github.com/mappy/simple-dashboard/master/dashboard.png)
+
 It’s composed of 2 parts, a node server and a client web page.
 
 The server fetches data like :
