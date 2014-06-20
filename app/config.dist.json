@@ -3,12 +3,13 @@
     "server": {
         "port": 8000
     },
-    "mongo": {
-        "host": "",
-        "port": "27017",
-        "db": "",
-        "collection": "",
-        "refresh": 300000 // each 5 minutes
+    "poi": {
+        "port": 80,
+        "host": "...",
+        "urls": {
+            "stats": [ "..." ]
+        },
+        "refresh": 300000
     },
     "twitter": {
         // See https://dev.twitter.com/docs/auth/tokens-devtwittercom to generate a token

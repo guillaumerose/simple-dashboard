@@ -2,7 +2,7 @@ var dashboard = function(config) {
 
     var launch = function() {
 
-        var poiRequestor         = require('./mongoRequestor')(config.mongo).launch();
+        var poiRequestor         = require('./httpRequestor')(config.poi).launch();
         var editoRequestor       = require('./fileRequestor')(config.edito).launch();
         var twitterRequestor     = require('./twitterRequestor')(config.twitter).launch();
         var facebookRequestor    = require('./httpRequestor')(config.facebook).launch();
@@ -85,7 +85,7 @@ var dashboard = function(config) {
         });
         app.get('/api/pois/count', function(req, res) {
             res.setHeader('content-type', 'application/json');
-            var objResponse = {'count': poiRequestor.value() };
+            var objResponse = {'count': JSON.parse(poiRequestor.values().stats).total };
             res.send(JSON.stringify(objResponse));
         });
         app.get('/api/edito/infos', function(req, res) {
