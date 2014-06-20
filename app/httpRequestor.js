@@ -11,7 +11,7 @@ var httpRequestor = function(config) {
     }
 
      var format =  require('util').format;
-     var requestor = (config.port === 80) ? http = require("http") : https = require("https");
+     var requestor = (config.port === 80 || config.port === 8080) ? http = require("http") : https = require("https");
 
     var fillParameters = function(urlArray) {
         var url = urlArray[0];
