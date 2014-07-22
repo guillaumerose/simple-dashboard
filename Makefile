@@ -13,10 +13,13 @@ debug:
 	./node_modules/.bin/nodemon --debug app/launcher.js
 
 start:
-	./node_modules/.bin/forever start app/launcher.js
+	pm2 start processes.json
 
 stop:
-	./node_modules/.bin/forever stop app/launcher.js
+	pm2 stop processes.json
+
+restart:
+	pm2 restart processes.json
 
 run:
 	./node_modules/.bin/nodemon app/launcher.js
