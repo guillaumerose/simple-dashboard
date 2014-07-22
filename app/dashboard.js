@@ -11,6 +11,9 @@ var dashboard = function(config) {
 
         var express = require('express');
         var app = express();
+        var CacheControl = require('express-cache-control');
+        var cache = new CacheControl().middleware;
+
         app.configure(function() {
             app.use(express.static( __dirname+'/../www'));
             app.use(function(req, res, next){
@@ -21,7 +24,7 @@ var dashboard = function(config) {
             app.use(app.router);
         });
         app.configure('production', function() {
-            app.use(express.cache(1000 * 60 * 60));
+            app.use(cache('hours', 24));
         });
         app.get('/api/twitter/infos', function(req, res) {
             res.setHeader('content-type', 'application/json');
@@ -35,7 +38,7 @@ var dashboard = function(config) {
             res.setHeader('content-type', 'application/json');
             try {
                 var value = facebookRequestor.values().fans;
-                var parsed = JSON.parse(value); 
+                var parsed = JSON.parse(value);
                 res.send(JSON.stringify(parsed.data[0]));
             } catch(e) {
                 console.log('Error while parsing facebook response', e);
