@@ -141,7 +141,13 @@
 
         var displayPois = function(jsonResponse) {
             if (jsonResponse.count !== null) {
-                var output = compiled({ count: formatNumber(jsonResponse.count)});
+                var output = compiled({ 
+                    total: formatNumber(jsonResponse.total), 
+                    ovm: formatNumber(jsonResponse.ovm), 
+                    ovmRaw: jsonResponse.ovm,
+                    vdr: formatNumber(jsonResponse.vdr), 
+                    cviv: formatNumber(jsonResponse.cviv)
+                });
                 $('.pois .count').html(output);
             }
         };

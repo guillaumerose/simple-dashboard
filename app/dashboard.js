@@ -85,8 +85,7 @@ var dashboard = function(config) {
         });
         app.get('/api/pois/count', function(req, res) {
             res.setHeader('content-type', 'application/json');
-            var objResponse = {'count': JSON.parse(poiRequestor.values().stats).total };
-            res.send(JSON.stringify(objResponse));
+            res.send(poiRequestor.values().stats);
         });
         app.get('/api/edito/infos', function(req, res) {
             res.setHeader('content-type', 'application/json');
