@@ -88,10 +88,16 @@
 
                 <section id="data" class="widget">
                     <article class="pois">
-                        <h2>Le saviez-vous</h2>
                         <p class="count"></p>
                         <script type="text/template" id="pois-count">
-                            <%= count %> <p><small>Poi en base</small></p>
+                            <p><%= total %> <small>POIs</small></p>
+                            <% if (ovmRaw <= 10) { %> 
+                            <p><%= cviv %> <small>POIs CVI Verticalisée</small></p>
+                            <% } %>
+                            <p><%= vdr %> <small>POIs Vitrine Digitale Réseau</small></p>
+                            <% if (ovmRaw > 10) { %> 
+                            <p><%= ovm %> <small>POIs avec Offre de Visibilité Mappy</small></p>
+                            <% } %>
                         </script>
                     </article>
                 </section>
