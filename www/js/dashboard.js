@@ -146,7 +146,7 @@
                     ovm: formatNumber(jsonResponse.ovm), 
                     ovmRaw: jsonResponse.ovm,
                     vdr: formatNumber(jsonResponse.vdr), 
-                    cviv: formatNumber(jsonResponse.cviv)
+                    annonceurs: formatNumber(jsonResponse.annonceurs)
                 });
                 $('.pois .count').html(output);
             }
